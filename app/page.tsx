@@ -1,69 +1,54 @@
-import Image from "next/image";
+import { menu, rupiah } from "@/data/menu";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="p-8 max-w-5xl mx-auto min-h-screen bg-gray-50 text-gray-900">
+      <header className="mb-8 border-b pb-4">
+        <h1 className="text-3xl font-bold">KantinKu 🍲</h1>
+        <p className="text-gray-600 mt-1">
+          Pilih dan pesan menu favorit sekolahmu
+        </p>
+      </header>
+
+      <section>
+        <h2 className="text-xl font-semibold mb-4">Daftar Menu</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {menu.map((item) => (
+            <div
+              key={item.id}
+              className="border rounded-lg p-4 shadow-sm bg-white hover:shadow-md transition"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <div className="h-32 bg-gray-100 rounded-md mb-3 flex items-center justify-center text-gray-400 font-medium">
+                {item.nama}
+              </div>
+              <h3 className="font-bold text-lg">{item.nama}</h3>
+              <p className="text-gray-600 font-medium mt-1">
+                {rupiah(item.harga)}
+              </p>
+
+              <div className="mt-3 flex items-center justify-between">
+                <span className="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-medium">
+                  {item.kategori}
+                </span>
+                <span className="text-xs text-gray-500 font-medium">
+                  Stok: {item.stok}
+                </span>
+              </div>
+
+              <button
+                disabled={item.stok === 0}
+                className={`w-full mt-4 py-2 rounded-lg font-medium transition text-sm ${
+                  item.stok > 0
+                    ? "bg-orange-500 hover:bg-orange-600 text-white"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
+              >
+                {item.stok > 0 ? "+ Tambah" : "Stok Habis"}
+              </button>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
