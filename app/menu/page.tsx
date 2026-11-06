@@ -3,44 +3,66 @@ import Link from "next/link";
 
 export default function MenuPage() {
   return (
-    <main className="p-8 max-w-5xl mx-auto min-h-screen bg-gray-50 text-gray-900">
-      <header className="mb-8 border-b pb-4">
-        <h1 className="text-3xl font-bold">Katalog Menu Kantin</h1>
-        <p className="text-gray-600 mt-1">Pilih menu favoritmu hari ini</p>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50/50 via-white to-gray-50 py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header Section */}
+        <div className="mb-10 text-center sm:text-left border-b border-gray-200 pb-6">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+            Katalog Menu <span className="text-orange-600">KantinKu</span> 🍲
+          </h1>
+          <p className="text-gray-600 mt-2 text-base">
+            Pilih dan nikmati makanan atau minuman favoritmu hari ini tanpa antre.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {menu.map((item) => (
-          <div
-            key={item.id}
-            className="border rounded-lg p-4 shadow-sm bg-white hover:shadow-md transition flex flex-col justify-between"
-          >
-            <div>
-              <div className="h-32 bg-gray-100 rounded-md mb-3 flex items-center justify-center text-gray-400 font-medium">
-                {item.nama}
+        {/* Grid Kartu Menu */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {menu.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+            >
+              <div>
+                {/* Bagian Gambar / Placeholder Menu */}
+                <div className="h-40 bg-gradient-to-tr from-orange-100 to-orange-50 flex items-center justify-center text-orange-600 font-semibold text-lg group-hover:scale-105 transition-transform duration-500 relative">
+                  <span className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  {item.nama}
+                </div>
+
+                {/* Informasi Menu */}
+                <div className="p-5">
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="bg-orange-50 text-orange-700 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider">
+                      {item.kategori}
+                    </span>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded ${item.stok === 0 ? "bg-red-50 text-red-600" : "bg-green-50 text-green-600"}`}>
+                      {item.stok === 0 ? "Habis" : `Stok: ${item.stok}`}
+                    </span>
+                  </div>
+
+                  <h3 className="font-bold text-xl text-gray-800 group-hover:text-orange-600 transition-colors">
+                    {item.nama}
+                  </h3>
+                  
+                  <p className="text-orange-600 font-extrabold text-lg mt-2">
+                    {rupiah(item.harga)}
+                  </p>
+                </div>
               </div>
-              <h3 className="font-bold text-lg">{item.nama}</h3>
-              <p className="text-gray-600 font-medium mt-1">{rupiah(item.harga)}</p>
-              
-              <div className="mt-3 flex items-center justify-between">
-                <span className="bg-orange-100 text-orange-800 text-xs px-2.5 py-1 rounded-full font-medium">
-                  {item.kategori}
-                </span>
-                <span className={`text-xs font-medium ${item.stok === 0 ? "text-red-500 font-bold" : "text-gray-500"}`}>
-                  {item.stok === 0 ? "Habis" : `Stok: ${item.stok}`}
-                </span>
+
+              {/* Tombol Aksi */}
+              <div className="p-5 pt-0">
+                <Link
+                  href={`/menu/${item.id}`}
+                  className="block text-center w-full bg-gray-900 hover:bg-orange-600 text-white py-2.5 rounded-xl font-medium shadow-sm transition-colors duration-200 text-sm"
+                >
+                  Lihat Detail
+                </Link>
               </div>
             </div>
-
-            <Link
-              href={`/menu/${item.id}`}
-              className="mt-4 block text-center bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg font-medium transition text-sm"
-            >
-              Lihat Detail
-            </Link>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
